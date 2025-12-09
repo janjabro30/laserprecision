@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ChatBot from "@/components/layout/ChatBot";
+import SessionProvider from "@/components/layout/SessionProvider";
 
 export const metadata: Metadata = {
   title: "Laser Presisjon - Profesjonell Lasergravering",
@@ -17,12 +18,14 @@ export default function RootLayout({
   return (
     <html lang="nb">
       <body className="antialiased bg-light">
-        <Header />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
-        <ChatBot />
+        <SessionProvider>
+          <Header />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
+          <ChatBot />
+        </SessionProvider>
       </body>
     </html>
   );
