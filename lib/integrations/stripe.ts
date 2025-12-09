@@ -1,5 +1,5 @@
 // Stripe Payment Integration
-import { PaymentIntent, PaymentResult, StripeConfig } from '@/lib/types/payment';
+import { PaymentResult, StripeConfig } from '@/lib/types/payment';
 
 export class StripeIntegration {
   private config: StripeConfig;
@@ -11,7 +11,7 @@ export class StripeIntegration {
   /**
    * Create a payment intent
    */
-  async createPaymentIntent(amount: number, currency: string = 'NOK', metadata?: Record<string, any>): Promise<PaymentResult> {
+  async createPaymentIntent(amount: number, _currency: string = 'NOK', _metadata?: Record<string, unknown>): Promise<PaymentResult> {
     try {
       // In production, this would call the Stripe API
       // For now, this is a mock implementation
@@ -100,7 +100,7 @@ export class StripeIntegration {
   /**
    * Verify webhook signature
    */
-  verifyWebhookSignature(payload: string, signature: string): boolean {
+  verifyWebhookSignature(_payload: string, _signature: string): boolean {
     // In production, this would verify the Stripe webhook signature
     return true;
   }

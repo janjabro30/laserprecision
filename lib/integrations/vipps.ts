@@ -106,7 +106,7 @@ export class VippsIntegration {
   /**
    * Verify callback from Vipps
    */
-  verifyCallback(authHeader: string): boolean {
+  verifyCallback(_authHeader: string): boolean {
     // In production, this would verify the JWT token from Vipps
     return true;
   }

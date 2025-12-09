@@ -12,9 +12,9 @@ export class PostenIntegration {
    * Get shipping rates
    */
   async getShippingRates(
-    fromPostalCode: string,
-    toPostalCode: string,
-    weight: number
+    _fromPostalCode: string,
+    _toPostalCode: string,
+    _weight: number
   ): Promise<ShippingRate[]> {
     try {
       if (!this.config.apiKey) {
@@ -47,9 +47,9 @@ export class PostenIntegration {
    */
   async createShippingLabel(
     orderId: string,
-    service: string,
-    toAddress: Address,
-    weight: number
+    _service: string,
+    _toAddress: Address,
+    _weight: number
   ): Promise<ShippingLabel | null> {
     try {
       // Mock label creation
@@ -97,7 +97,16 @@ export class PostenIntegration {
   /**
    * Get pickup points
    */
-  async getPickupPoints(postalCode: string): Promise<any[]> {
+  async getPickupPoints(_postalCode: string): Promise<Array<{
+    id: string;
+    name: string;
+    address: string;
+    postalCode: string;
+    city: string;
+    openingHours: string;
+    carrier: string;
+    distance: number;
+  }>> {
     try {
       // Mock pickup points
       return [

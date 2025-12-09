@@ -12,9 +12,9 @@ export class HelthjemIntegration {
    * Get shipping rates with time slots
    */
   async getShippingRates(
-    fromPostalCode: string,
-    toPostalCode: string,
-    weight: number
+    _fromPostalCode: string,
+    _toPostalCode: string,
+    _weight: number
   ): Promise<ShippingRate[]> {
     try {
       if (!this.config.apiKey) {
@@ -45,7 +45,7 @@ export class HelthjemIntegration {
   /**
    * Get available delivery time slots
    */
-  async getAvailableTimeSlots(postalCode: string, date: Date): Promise<string[]> {
+  async getAvailableTimeSlots(_postalCode: string, _date: Date): Promise<string[]> {
     try {
       // Mock time slots
       return [
@@ -65,9 +65,9 @@ export class HelthjemIntegration {
    */
   async createShippingLabel(
     orderId: string,
-    toAddress: Address,
-    weight: number,
-    timeSlot?: string
+    _toAddress: Address,
+    _weight: number,
+    _timeSlot?: string
   ): Promise<ShippingLabel | null> {
     try {
       // Mock label creation
@@ -121,7 +121,7 @@ export class HelthjemIntegration {
   /**
    * Check if address is serviceable
    */
-  async checkServiceability(postalCode: string): Promise<boolean> {
+  async checkServiceability(_postalCode: string): Promise<boolean> {
     try {
       // Mock serviceability check
       // In production, this would check if Helthjem delivers to the area

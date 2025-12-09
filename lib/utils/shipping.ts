@@ -1,5 +1,5 @@
 // Shipping Utility Functions
-import { ShippingConfig, ShippingCarrier, ShippingRate, ShippingMethod } from '@/lib/types/shipping';
+import { ShippingConfig, ShippingCarrier, ShippingMethod } from '@/lib/types/shipping';
 import { createBringIntegration } from '@/lib/integrations/bring';
 import { createPostenIntegration } from '@/lib/integrations/posten';
 import { createHelthjemIntegration } from '@/lib/integrations/helthjem';

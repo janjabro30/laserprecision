@@ -54,7 +54,7 @@ export interface PaymentIntent {
   currency: string;
   provider: PaymentProvider;
   status: PaymentStatus;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -64,7 +64,7 @@ export interface PaymentResult {
   paymentId?: string;
   redirectUrl?: string;
   error?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface Transaction {
@@ -75,7 +75,7 @@ export interface Transaction {
   currency: string;
   status: PaymentStatus;
   paymentIntentId?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   createdAt: Date;
   updatedAt: Date;
 }

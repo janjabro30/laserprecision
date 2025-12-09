@@ -11,7 +11,7 @@ export class KlarnaIntegration {
   /**
    * Create Klarna order session
    */
-  async createSession(amount: number, orderId: string, locale: string = 'nb-NO'): Promise<PaymentResult> {
+  async createSession(amount: number, orderId: string, _locale: string = 'nb-NO'): Promise<PaymentResult> {
     try {
       if (!this.config.username || !this.config.password) {
         return {
@@ -48,7 +48,7 @@ export class KlarnaIntegration {
   /**
    * Create Klarna order
    */
-  async createOrder(sessionId: string, authorizationToken: string): Promise<PaymentResult> {
+  async createOrder(_sessionId: string, _authorizationToken: string): Promise<PaymentResult> {
     try {
       // Mock order creation
       const orderId = `klarna_order_${Date.now()}`;

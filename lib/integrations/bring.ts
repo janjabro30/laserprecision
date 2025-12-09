@@ -12,10 +12,10 @@ export class BringIntegration {
    * Get shipping rates
    */
   async getShippingRates(
-    fromPostalCode: string,
-    toPostalCode: string,
-    weight: number, // grams
-    dimensions?: { width: number; height: number; length: number }
+    _fromPostalCode: string,
+    _toPostalCode: string,
+    _weight: number, // grams
+    _dimensions?: { width: number; height: number; length: number }
   ): Promise<ShippingRate[]> {
     try {
       if (!this.config.apiKey) {
@@ -54,9 +54,9 @@ export class BringIntegration {
    */
   async createShippingLabel(
     orderId: string,
-    service: string,
-    toAddress: Address,
-    weight: number
+    _service: string,
+    _toAddress: Address,
+    _weight: number
   ): Promise<ShippingLabel | null> {
     try {
       // Mock label creation
@@ -110,7 +110,16 @@ export class BringIntegration {
   /**
    * Get pickup points
    */
-  async getPickupPoints(postalCode: string, countryCode: string = 'NO'): Promise<any[]> {
+  async getPickupPoints(_postalCode: string, _countryCode: string = 'NO'): Promise<Array<{
+    id: string;
+    name: string;
+    address: string;
+    postalCode: string;
+    city: string;
+    openingHours: string;
+    carrier: string;
+    distance: number;
+  }>> {
     try {
       // Mock pickup points
       return [
