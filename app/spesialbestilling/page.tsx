@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 import Breadcrumb from '@/components/layout/Breadcrumb';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
+import Toast from '@/components/ui/Toast';
 import { isFutureDate } from '@/lib/utils/formatting';
+import { useToast } from '@/lib/utils/useToast';
 
 type Step = 1 | 2 | 3 | 4;
 
@@ -30,6 +32,7 @@ export default function SpecialOrderPage() {
     preferredDate: '',
   });
   const [dateError, setDateError] = useState('');
+  const { toasts, showToast, removeToast } = useToast();
 
   const materials = ['Tre - Eik', 'Tre - Valnøtt', 'Tre - Bjørk', 'Aluminium', 'Rustfritt Stål', 'Akryl', 'Skinn'];
   const engravingStyles = ['Gravering', 'Kutt', 'Markering', 'Kombinasjon'];
@@ -76,11 +79,11 @@ export default function SpecialOrderPage() {
 
   const handleSaveDraft = () => {
     localStorage.setItem('specialOrderDraft', JSON.stringify(orderData));
-    alert('Utkast lagret! Du kan fortsette senere fra "Mine Utkast".');
+    showToast('Utkast lagret! Du kan fortsette senere fra "Mine Utkast".', 'success');
   };
 
   const handleSubmit = () => {
-    alert('Spesialbestilling sendt! Vi tar kontakt med deg snart.');
+    showToast('Spesialbestilling sendt! Vi tar kontakt med deg snart.', 'success');
     setOrderData({
       material: '',
       engravingStyle: '',
@@ -403,6 +406,18 @@ export default function SpecialOrderPage() {
         <a href="/spesialbestilling/mine-utkast" className="text-blue-600 hover:underline">
           Gå til Mine Utkast →
         </a>
+      </div>
+
+      {/* Toast Notifications */}
+      <div className="fixed bottom-4 right-4 z-50 space-y-2">
+        {toasts.map((toast) => (
+          <Toast
+            key={toast.id}
+            message={toast.message}
+            type={toast.type}
+            onClose={() => removeToast(toast.id)}
+          />
+        ))}
       </div>
     </div>
   );

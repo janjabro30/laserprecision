@@ -91,7 +91,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-semibold mb-3">Høy Kvalitet</h3>
               <p className="text-gray-600">
-                Alle produkter er kvalitetskontrollert og kommer med garantI.
+                Alle produkter er kvalitetskontrollert og kommer med garanti.
               </p>
             </div>
           </div>

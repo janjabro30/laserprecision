@@ -39,7 +39,8 @@ export function validatePhone(phone: string): boolean {
 export function isFutureDate(date: Date): boolean {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  return date >= today;
+  date.setHours(0, 0, 0, 0);
+  return date > today;
 }
 
 export function generateOrderNumber(): string {
