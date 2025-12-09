@@ -1,0 +1,274 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// Admin Users
+model AdminUser {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  passwordHash  String
+  name          String
+  createdAt     DateTime @default(now())
+  lastLoginAt   DateTime?
+  activityLogs  ActivityLog[]
+}
+
+// Activity Log
+model ActivityLog {
+  id          String      @id @default(cuid())
+  adminUser   AdminUser   @relation(fields: [adminUserId], references: [id])
+  adminUserId String
+  action      String
+  entity      String
+  entityId    String?
+  details     String?
+  createdAt   DateTime    @default(now())
+}
+
+// Products
+model Product {
+  id              String            @id @default(cuid())
+  name            String
+  slug            String            @unique
+  description     String
+  price           Float
+  salePrice       Float?
+  sku             String?           @unique
+  category        String
+  images          ProductImage[]
+  variants        ProductVariant[]
+  inventory       Inventory[]
+  inStock         Boolean           @default(true)
+  featured        Boolean           @default(false)
+  visibility      String            @default("published") // published, draft
+  seoTitle        String?
+  seoDescription  String?
+  relatedProducts String?           // JSON array of product IDs
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  orderItems      OrderItem[]
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  url       String
+  alt       String?
+  order     Int      @default(0)
+}
+
+model ProductVariant {
+  id            String   @id @default(cuid())
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId     String
+  name          String
+  type          String   // size, color, material
+  options       String   // JSON array of options
+  priceModifier Float?
+}
+
+model Inventory {
+  id           String   @id @default(cuid())
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId    String
+  variant      String?  // JSON object with variant selections
+  quantity     Int
+  lowStockThreshold Int @default(5)
+  sku          String?
+  updatedAt    DateTime @updatedAt
+  stockHistory StockHistory[]
+  
+  @@unique([productId, variant])
+}
+
+model StockHistory {
+  id          String    @id @default(cuid())
+  inventory   Inventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+  inventoryId String
+  change      Int
+  reason      String
+  note        String?
+  createdAt   DateTime  @default(now())
+}
+
+// Orders
+model Order {
+  id                String      @id @default(cuid())
+  orderNumber       String      @unique
+  customer          Customer    @relation(fields: [customerId], references: [id])
+  customerId        String
+  items             OrderItem[]
+  status            String      // Mottatt, Under behandling, Pakket, Sendt, Levert, Kansellert
+  subtotal          Float
+  shipping          Float
+  total             Float
+  shippingAddress   String
+  billingAddress    String?
+  paymentMethod     String
+  paymentStatus     String      @default("pending")
+  trackingNumber    String?
+  carrier           String?
+  estimatedDelivery DateTime?
+  deliveredAt       DateTime?
+  giftWrapping      Boolean     @default(false)
+  notes             String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  statusHistory     OrderStatusHistory[]
+}
+
+model OrderItem {
+  id            String   @id @default(cuid())
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId       String
+  product       Product  @relation(fields: [productId], references: [id])
+  productId     String
+  productName   String
+  variant       String?  // JSON object
+  quantity      Int
+  price         Float
+  customization String?  // JSON object for engraving details
+}
+
+model OrderStatusHistory {
+  id          String   @id @default(cuid())
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId     String
+  status      String
+  description String?
+  createdAt   DateTime @default(now())
+}
+
+// Special Orders (Custom Orders)
+model SpecialOrder {
+  id                  String   @id @default(cuid())
+  orderNumber         String   @unique
+  customer            Customer @relation(fields: [customerId], references: [id])
+  customerId          String
+  status              String   // Mottatt, Venter på godkjenning, Godkjent, Under produksjon, Kvalitetskontroll, Klar for sending, Sendt, Levert
+  material            String?
+  engravingStyle      String?
+  font                String?
+  uploadedImages      String?  // JSON array of image URLs
+  description         String?
+  preferredDate       DateTime?
+  estimatedPrice      Float?
+  finalPrice          Float?
+  quoteApproved       Boolean  @default(false)
+  itemArrived         Boolean  @default(false)
+  preparationComplete Boolean  @default(false)
+  trackingNumber      String?
+  carrier             String?
+  notes               String?
+  adminNotes          String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  statusHistory       SpecialOrderStatusHistory[]
+}
+
+model SpecialOrderStatusHistory {
+  id             String       @id @default(cuid())
+  specialOrder   SpecialOrder @relation(fields: [specialOrderId], references: [id], onDelete: Cascade)
+  specialOrderId String
+  status         String
+  description    String?
+  createdAt      DateTime     @default(now())
+}
+
+// Customers
+model Customer {
+  id              String         @id @default(cuid())
+  email           String         @unique
+  name            String
+  phone           String?
+  defaultAddress  String?
+  notes           String?
+  orders          Order[]
+  specialOrders   SpecialOrder[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+// Blog Posts
+model BlogPost {
+  id              String   @id @default(cuid())
+  title           String
+  slug            String   @unique
+  excerpt         String
+  content         String
+  coverImage      String?
+  author          String
+  category        String
+  tags            String?  // JSON array
+  status          String   @default("draft") // draft, published
+  seoTitle        String?
+  seoDescription  String?
+  publishedAt     DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// Pages (for content management)
+model Page {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  content     String
+  seoTitle    String?
+  seoDescription String?
+  updatedAt   DateTime @updatedAt
+}
+
+// Settings
+model Settings {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+  category String // general, payment, shipping, email, seo
+  updatedAt DateTime @updatedAt
+}
+
+// Email Logs
+model EmailLog {
+  id        String   @id @default(cuid())
+  recipient String
+  subject   String
+  template  String
+  status    String   // sent, failed, pending
+  error     String?
+  sentAt    DateTime?
+  createdAt DateTime @default(now())
+}
+
+// Chat Logs
+model ChatLog {
+  id         String   @id @default(cuid())
+  sessionId  String
+  role       String   // user, assistant
+  content    String
+  context    String?  // JSON object with additional context
+  createdAt  DateTime @default(now())
+}
+
+// Support Tickets (from chatbot)
+model SupportTicket {
+  id          String   @id @default(cuid())
+  chatSession String
+  customerEmail String?
+  subject     String
+  description String
+  status      String   @default("open") // open, in_progress, resolved, closed
+  priority    String   @default("normal") // low, normal, high, urgent
+  assignedTo  String?
+  resolution  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
