@@ -4,7 +4,6 @@ import { hash } from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
-  
   try {
     console.log('Starting seed...');
 
