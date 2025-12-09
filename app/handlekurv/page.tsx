@@ -133,9 +133,11 @@ export default function ShoppingCartPage() {
                 </div>
               </div>
 
-              <Button size="lg" className="w-full">
-                Gå til Kasse
-              </Button>
+              <Link href="/kasse">
+                <Button variant="gold" size="lg" className="w-full">
+                  Gå til Kasse
+                </Button>
+              </Link>
 
               <Link href="/produkter">
                 <Button variant="outline" className="w-full mt-3">

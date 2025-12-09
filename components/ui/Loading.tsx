@@ -8,16 +8,19 @@ export function Spinner({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   }[size];
 
   return (
-    <div className={`${sizeClass} border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin`} />
+    <div className="relative inline-block">
+      <div className={`${sizeClass} border-4 border-gold-200 rounded-full`} />
+      <div className={`${sizeClass} border-4 border-transparent border-t-gold rounded-full animate-spin absolute inset-0`} />
+    </div>
   );
 }
 
 export function LoadingPage() {
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-screen bg-light">
       <div className="text-center">
         <Spinner size="lg" />
-        <p className="mt-4 text-gray-600">Laster...</p>
+        <p className="mt-4 text-dark font-medium">Laster...</p>
       </div>
     </div>
   );
@@ -26,11 +29,11 @@ export function LoadingPage() {
 export function SkeletonCard() {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
-      <div className="h-48 bg-gray-200" />
+      <div className="h-48 bg-gold-100" />
       <div className="p-4">
-        <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
-        <div className="h-3 bg-gray-200 rounded w-full mb-2" />
-        <div className="h-3 bg-gray-200 rounded w-2/3" />
+        <div className="h-4 bg-gold-100 rounded w-3/4 mb-2" />
+        <div className="h-3 bg-gold-100 rounded w-full mb-2" />
+        <div className="h-3 bg-gold-100 rounded w-2/3" />
       </div>
     </div>
   );
