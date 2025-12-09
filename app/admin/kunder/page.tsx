@@ -7,7 +7,7 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import { FiUsers, FiMail, FiShoppingBag } from 'react-icons/fi';
 
 export default function CustomersPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 

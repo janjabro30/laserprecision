@@ -7,7 +7,7 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import { FiAlertTriangle, FiPackage, FiTrendingDown } from 'react-icons/fi';
 
 export default function InventoryPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 

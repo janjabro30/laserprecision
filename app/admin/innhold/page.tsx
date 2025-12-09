@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import AdminLayout from '@/components/admin/AdminLayout';
-import { FiFileText, FiEdit, FiImage, FiHome } from 'react-icons/fi';
+import { FiFileText, FiEdit, FiHome } from 'react-icons/fi';
 
 export default function ContentPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('pages');
@@ -147,7 +147,7 @@ export default function ContentPage() {
                   <div className="border border-gray-200 rounded-lg p-4">
                     <h4 className="font-semibold text-dark mb-3">Fremhevede Produkter</h4>
                     <p className="text-sm text-gray-600">
-                      Produkter merket som "fremhevet" vil vises på hjemmesiden.
+                      Produkter merket som &quot;fremhevet&quot; vil vises på hjemmesiden.
                       Administrer dette fra Produktsiden.
                     </p>
                   </div>

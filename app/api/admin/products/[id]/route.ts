@@ -200,11 +200,11 @@ export async function PUT(
           : undefined,
         variants: variants?.length
           ? {
-              create: variants.map((v: any) => ({
+              create: variants.map((v: { name: string; type: string; options: string[]; priceModifier?: number | string }) => ({
                 name: v.name,
                 type: v.type,
                 options: JSON.stringify(v.options),
-                priceModifier: v.priceModifier ? parseFloat(v.priceModifier) : null,
+                priceModifier: v.priceModifier ? (typeof v.priceModifier === 'string' ? parseFloat(v.priceModifier) : v.priceModifier) : null,
               })),
             }
           : undefined,

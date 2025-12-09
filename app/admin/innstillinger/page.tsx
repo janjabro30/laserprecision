@@ -6,11 +6,11 @@ import { useRouter } from 'next/navigation';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { 
   FiSettings, FiDollarSign, FiTruck, FiMail, 
-  FiSearch, FiGlobe 
+  FiSearch 
 } from 'react-icons/fi';
 
 export default function SettingsPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('general');

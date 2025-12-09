@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
 // GET all products
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions);
     if (!session) {
@@ -85,11 +85,11 @@ export async function POST(request: NextRequest) {
           : undefined,
         variants: variants?.length
           ? {
-              create: variants.map((v: any) => ({
+              create: variants.map((v: { name: string; type: string; options: string[]; priceModifier?: number | string }) => ({
                 name: v.name,
                 type: v.type,
                 options: JSON.stringify(v.options),
-                priceModifier: v.priceModifier ? parseFloat(v.priceModifier) : null,
+                priceModifier: v.priceModifier ? (typeof v.priceModifier === 'string' ? parseFloat(v.priceModifier) : v.priceModifier) : null,
               })),
             }
           : undefined,

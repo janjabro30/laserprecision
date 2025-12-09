@@ -7,7 +7,7 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import { FiBox, FiCheckCircle, FiClock, FiTool } from 'react-icons/fi';
 
 export default function SpecialOrdersPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 

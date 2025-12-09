@@ -7,7 +7,7 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import { FiTrendingUp, FiDollarSign, FiShoppingBag, FiPackage } from 'react-icons/fi';
 
 export default function ReportsPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
