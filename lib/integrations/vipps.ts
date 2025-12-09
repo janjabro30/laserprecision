@@ -105,9 +105,12 @@ export class VippsIntegration {
 
   /**
    * Verify callback from Vipps
+   * WARNING: This is a mock implementation. In production, implement proper JWT validation
+   * using Vipps public keys and signature verification.
    */
   verifyCallback(_authHeader: string): boolean {
-    // In production, this would verify the JWT token from Vipps
+    // TODO: In production, this MUST verify the JWT token from Vipps
+    // Example: jwt.verify(token, vippsPublicKey, { algorithms: ['RS256'] });
     return true;
   }
 }

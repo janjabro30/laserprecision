@@ -22,7 +22,7 @@ interface OrderDetails {
 /**
  * Base email template wrapper
  */
-function EmailWrapper({ children }: { children: React.ReactNode }) {
+function EmailWrapper(children: string): string {
   return `
 <!DOCTYPE html>
 <html lang="nb">
@@ -197,7 +197,7 @@ export function generateOrderConfirmationEmail(order: OrderDetails): string {
     </div>
   `;
   
-  return EmailWrapper({ children: content });
+  return EmailWrapper(content);
 }
 
 /**
@@ -239,7 +239,7 @@ export function generateOrderShippedEmail(
     </div>
   `;
   
-  return EmailWrapper({ children: content });
+  return EmailWrapper(content);
 }
 
 /**
@@ -280,7 +280,7 @@ export function generateStorePickupEmail(order: OrderDetails, storeAddress: stri
     </div>
   `;
   
-  return EmailWrapper({ children: content });
+  return EmailWrapper(content);
 }
 
 /**
@@ -319,7 +319,7 @@ export function generateCustomOrderStatusEmail(
     </div>
   `;
   
-  return EmailWrapper({ children: content });
+  return EmailWrapper(content);
 }
 
 /**

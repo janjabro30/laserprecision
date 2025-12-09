@@ -99,9 +99,12 @@ export class StripeIntegration {
 
   /**
    * Verify webhook signature
+   * WARNING: This is a mock implementation. In production, implement proper signature verification
+   * using Stripe's webhook secret and crypto validation.
    */
   verifyWebhookSignature(_payload: string, _signature: string): boolean {
-    // In production, this would verify the Stripe webhook signature
+    // TODO: In production, this MUST verify the Stripe webhook signature
+    // Example: const signature = stripe.webhooks.constructEvent(payload, signature, webhookSecret);
     return true;
   }
 }
